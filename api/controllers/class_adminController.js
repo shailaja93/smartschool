@@ -93,7 +93,6 @@ module.exports = {
                   var major_student_class = (user[i].major_student.toString()).charAt(0);
                   var major_student_div = String.fromCharCode(user[i].major_student - (Number(major_student_class) *100));
                   user[i].major_student = major_student_class.concat(major_student_div);
-                  // console.log(user[i].major_student);
               }
         }
         console.log(user);
@@ -103,12 +102,15 @@ module.exports = {
   },
 
     userUpdate : function(req, res) {
-      
-      var param = req.allParams();
-      var id =param.id; //45;
-      var username = param.username; //"3E";
-      var password = param.password; //param.password;  "3E";
-      var major_student_value = param.major_student; // "3E";
+     
+      req.accepts('application/json');
+      // res.set(Content-Type', 'application/json'');
+      var obj = req.body;
+      console.log(obj);
+      var id = obj[0].id; //45;
+      var username = obj[0].username; //"3E";
+      var password = obj[0].password; //param.password;  "3E";
+      var major_student_value = obj[0].major_student; // "3E";
       var major_faculty = 54651;
 
       if(major_student_value.length === 2) {
