@@ -1,0 +1,13 @@
+<table border=1>
+<tr><% data.forEach(function (users) { %>
+<tr>
+    <td><b><%= users.id %></b></td>
+    <td><%= users.uname %></td>
+    <td><%= users.password %></td>
+    <td><%= users.major_student %></td>
+    <td><%= users.major_faculty %></td>
+    <td><a href="/crud_adminController/view_info_classadmin/<%=users.id %>">UPDATE</a></td>
+    <td><a href="/crud_adminController/delete_classadmin/<%=users.id %>">DELETE</td>
+</tr>
+<% }); %>
+</table>
