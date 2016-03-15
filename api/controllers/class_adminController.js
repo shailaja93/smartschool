@@ -104,7 +104,6 @@ module.exports = {
     userUpdate : function(req, res) {
      
       req.accepts('application/json');
-      // res.set(Content-Type', 'application/json'');
       var obj = req.body;
       console.log(obj);
       var id = obj[0].id; //45;
