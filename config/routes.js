@@ -76,11 +76,13 @@ module.exports.routes = {
   'post /FacultiesController/update_faculty/:fac_id': 'FacultiesController.update_faculty',
   'get /FacultiesController/list_faculty': 'FacultiesController.list_faculty',
   'get /FacultiesController/view_info_faculty/:fac_id': 'FacultiesController.view_info_faculty',
-  'get /FacultiesController/delete_faculty/:fac_id': 'FacultiesController.delete_faculty'
+  'get /FacultiesController/delete_faculty/:fac_id': 'FacultiesController.delete_faculty',
 
 
 
-   // 'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student'
+   'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student',
+   'get /Transaction_studentsController/attendance_permonth': 'Transaction_studentsController.attendance_permonth',
+   'get /Transaction_studentsController/attendance_currentday': 'Transaction_studentsController.attendance_currentday'
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

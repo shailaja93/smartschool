@@ -7,15 +7,14 @@
 
 var async = require('async');
 module.exports = {
-	
+	     
 	attendance_student: function(req,res) {
-     
        //var param = req.params.all();
        //var value_major = param.stud_major();
        var value_major = 1265;
        //---------------------------------------------------------------------------------
-                                function hmsToSeconds(b) {
-                                 // var b = s.split(':');
+                                function hmsToSeconds(s) {
+                                  var b = s.split(':');
                                   return b[0]*3600 + b[1]*60 + (+b[2] || 0);
                                 }     
                                 function secondsToHMS(secs) {
@@ -46,7 +45,7 @@ module.exports = {
                var data = {
                    user_data : user,
            };
-         //  console.log(data);
+           console.log(data);
            
        
         var i =0;
@@ -112,36 +111,26 @@ module.exports = {
                     var finalresult;
                     for(var k = 0,j = 1 ; k < len, j < len ; k = k + 2, j = j + 2)
                     {
-                       console.log("--------------VALUE OF k-----------");
-                       console.log(k);
-                            console.log("--------------VALUE OF j-----------");
-                            console.log(j);
-                             var a = user1[k].time_stamp;
-                             var b = user1[j].time_stamp; 
+                               console.log("--------------VALUE OF k-----------");
+                               console.log(k);
+                               console.log("--------------VALUE OF j-----------");
+                               console.log(j);
+                               var a = user1[k].time_stamp.toLocaleTimeString();
+                               var b = user1[j].time_stamp.toLocaleTimeString(); 
+                               console.log(a);
+                               console.log(b);
                              
-                               var arr1 = [];
-                               var arr2 = [];
-                               
-                               arr1[0] = a.getHours();
-                               arr1[1] = a.getMinutes();
-                               arr1[2] = a.getSeconds();
-                               arr2[0] = b.getHours();
-                               arr2[1] = b.getMinutes();
-                               arr2[2] = b.getSeconds();
-                               console.log(arr1);
-                               console.log(arr2);
-  
-                            //   var append = secondsToHMS(hmsToSeconds(arr2) - hmsToSeconds(arr1));
-                                 var append = calc(arr2,arr1);
-                               if(c == 0)
-                               {
-                                 c = append;
-                               }
-                               else
-                               {
-                                  c = sum(c,append); 
-                               } 
-                               console.log(c);    
+                                var append = secondsToHMS(hmsToSeconds(b) - hmsToSeconds(a));
+                                console.log(append);
+                                 if(c == 0)
+                                 {
+                                   c = append;
+                                 }
+                                 else
+                                 {
+                                    c = sum(c,append); 
+                                 } 
+                                 console.log(c);    
                     }
                     var c_split = c.split(':');
                     if(c_split[0] > 30)
@@ -188,11 +177,49 @@ module.exports = {
             console.log("---AFTER INCREMENT-----");
             i= i+1;
             console.log(i);
+            console.log("-----------------------------------"); 
             callback();
 		      }); 
         });
 
     });                           
-   }
+   },
+
+   attendance_permonth :function(req,res) {
+
+   var y = 2015;
+   var m = 03;
+   var grno = 35;
+         Attendance_student.query('select presence,date from attendance_students where YEAR(date) = '+ y +' AND MONTH(date) = '+ m +' AND gr_no_as = '+ grno +' order by date asc;',function(err2,user) {
+         if (err2) {
+             return res.send(err2);
+         }
+
+         if(user.length == 0)
+         {
+          console.log("Please enter valid month/year");
+         }
+         else
+         {
+          for(var i = 0;i < user.length; i++)
+          {
+            user[i].date = user[i].date.toLocaleDateString();
+          }
+          console.log(user);
+         }
+       });
+
+   },
+ 
+   attendance_currentday :function(req,res) {
+
+         var d = "'2016-03-16'";
+         Attendance_student.query('select minor_as,presence from attendance_students where DATE(date) = '+ d +' order by date asc;',function(err2,user) {
+         if (err2) {
+             return res.send(err2);
+         }
+         console.log(user);
+   });
+  }
 };
 

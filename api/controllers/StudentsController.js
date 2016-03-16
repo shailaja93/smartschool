@@ -77,6 +77,7 @@ insert_student: function(req, res) {
                   var data = { 
                       Count_user: user
                   };
+                  
                   return res.json(user);
               });
             });
