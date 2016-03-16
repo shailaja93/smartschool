@@ -36,11 +36,13 @@ module.exports.routes = {
     view: 'homepage'
   },
   'POST /user/beacon_info' : 'beaconInfoController.getBeaconInfo',
+  
   'GET /user/attendance_info' : 'attendanceInfoController.displayAttendance',
+  'GET /user/attendance_student' : 'attendanceInfoController.attendance_student',
+
   'POST /user/create_admin' : 'class_adminController.userCreate',  
   'GET /user/user_login' : 'class_adminController.userLogin',
   'GET /user/list_user' : 'class_adminController.userList',
-  'GET /user/attendance_student' : 'attendanceInfoController.attendance_student',
   'POST /user/update_user' : 'class_adminController.userUpdate'
 
 
