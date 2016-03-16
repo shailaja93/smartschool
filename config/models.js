@@ -17,10 +17,12 @@ module.exports.models = {
   * connections (see `config/connections.js`)                                *
   *                                                                          *
   ***************************************************************************/
+
    connection: 'someMysqlServer',
    autoCreatedAt: false,
    autoUpdatedAt: false,
-   schema : false
+   schema : false,
+
   /***************************************************************************
   *                                                                          *
   * How and whether Sails will attempt to automatically rebuild the          *
@@ -29,6 +31,8 @@ module.exports.models = {
   * See http://sailsjs.org/#!/documentation/concepts/ORM/model-settings.html  *
   *                                                                          *
   ***************************************************************************/
-  // migrate: 'alter'
+
+   // migrate: 'safe'
+
 
 };
