@@ -1,5 +1,6 @@
 module.exports = {
   tableName : 'attendance_students',
+
   attributes: {
        id: {
            type: 'INTEGER',
@@ -15,7 +16,6 @@ module.exports = {
        major_as: {
             type: 'INTEGER'
        },
-       
        presence: {
             type: 'INTEGER'
        }

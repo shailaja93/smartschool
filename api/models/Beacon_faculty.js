@@ -1,6 +1,5 @@
-
 /**
-* User.js
+* Beacon_faculty.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -8,27 +7,28 @@
 
 module.exports = {
 
+tableName : "beacon_faculties",
+
   attributes: {
-       id: {
+      id: {
            type: 'INTEGER',
            primaryKey : true,
            autoincrement : true
        },
-       username: {
-           type: 'STRING',
-           unique : true
+       gr_no_bf: {
+           type: 'INTEGER'
        },
-       password: {
+       uuid: {
            type: 'STRING'
        },
-       major_student: {
+       major: {
             type: 'INTEGER'
        },
-       major_faculty: {
+       minor: {
             type: 'INTEGER'
        },
        is_delete: {
-          type: 'INTEGER'
+       		type: 'INTEGER'
        }
   }
 };

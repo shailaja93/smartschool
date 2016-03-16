@@ -1,0 +1,8 @@
+<form method="get" action="/crud_adminController/update_classadmin">
+<% data.forEach(function (users) { %>
+<input type="hidden" name="id" value=<%= users.id %> />
+Major Student:<input type="text" name="major_student" value=<%= users.major_student%>><br>
+Major Faculty:<input type="text" name="major_faculty" value=<%= users.major_faculty %>><br>
+<% }); %>
+<input type="submit" value="Update">
+</form>
