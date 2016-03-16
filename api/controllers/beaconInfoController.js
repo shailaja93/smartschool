@@ -30,7 +30,7 @@ module.exports = {
         // }]
 
         var obj = req.body;
-        console.log(obj);
+        // console.log(obj);
         async.forEachOfSeries(obj, function(value,key,callback) {
 
             

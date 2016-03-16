@@ -135,28 +135,30 @@ module.exports = {
             console.log("+++++-----");
             return err;
           }
+          console.log(user);
+          res.status(200);
+          return res.json('Data Updated');
+     //      User.find({select: ['id','username','password','major_student','major_faculty']})
+     //  .exec(function(err, user) {
+     //    if(err) {
+     //        res.badRequest('reason');
+     //    }
 
-          User.find({select: ['id','username','password','major_student','major_faculty']})
-      .exec(function(err, user) {
-        if(err) {
-            res.badRequest('reason');
-        }
 
-
-         for(var i =0 ; i < user.length; i++) {
+     //     for(var i =0 ; i < user.length; i++) {
         
-              if((user[i].major_student.toString()).length === 3) {
+     //          if((user[i].major_student.toString()).length === 3) {
 
-                  var major_student_class = (user[i].major_student.toString()).charAt(0);
-                  var major_student_div = String.fromCharCode(user[i].major_student - (Number(major_student_class) *100));
-                  user[i].major_student = major_student_class.concat(major_student_div);
-                  // console.log(user[i].major_student);
-              }
-        }
-        console.log(user);
-        return res.json(user);
+     //              var major_student_class = (user[i].major_student.toString()).charAt(0);
+     //              var major_student_div = String.fromCharCode(user[i].major_student - (Number(major_student_class) *100));
+     //              user[i].major_student = major_student_class.concat(major_student_div);
+     //              // console.log(user[i].major_student);
+     //          }
+     //    }
+     // //   console.log(user);
+     //    return res.json(user);
   
-      });
+      // });
 
       });
   }

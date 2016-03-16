@@ -37,8 +37,9 @@ module.exports.routes = {
   },
   'POST /user/beacon_info' : 'beaconInfoController.getBeaconInfo',  //---
   
-  'GET /user/attendance_info' : 'attendanceInfoController.displayAttendance',
-  'GET /user/attendance_student' : 'attendanceInfoController.attendance_student',
+  'GET /student/student_info' : 'attendanceInfoController.displayStudent',
+  'GET /student/student_location_timestamp' : 'attendanceInfoController.displayStudentAttendance',
+  'GET /student/attendance_student' : 'attendanceInfoController.attendance_student',
 
 
   'POST /user/create_admin' : 'class_adminController.userCreate',  //-------
