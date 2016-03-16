@@ -35,15 +35,16 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  'POST /user/beacon_info' : 'beaconInfoController.getBeaconInfo',
+  'POST /user/beacon_info' : 'beaconInfoController.getBeaconInfo',  //---
   
   'GET /user/attendance_info' : 'attendanceInfoController.displayAttendance',
   'GET /user/attendance_student' : 'attendanceInfoController.attendance_student',
 
-  'POST /user/create_admin' : 'class_adminController.userCreate',  
-  'GET /user/user_login' : 'class_adminController.userLogin',
-  'GET /user/list_user' : 'class_adminController.userList',
-  'POST /user/update_user' : 'class_adminController.userUpdate',
+
+  'POST /user/create_admin' : 'class_adminController.userCreate',  //-------
+  'GET /user/user_login' : 'class_adminController.userLogin',   //----
+  'GET /user/list_user' : 'class_adminController.userList',     //----
+  'POST /user/update_user' : 'class_adminController.userUpdate',  //----
   
   // 'get /LoginController/afterlogin_authenticate': 'LoginController.afterlogin_authenticate',
 
@@ -54,9 +55,9 @@ module.exports.routes = {
   // 'get /UsersController/delete_user/:id': 'UsersController.delete_user',
 
   'post /StudentsController/insert_student': 'StudentsController.insert_student',
-  'get /StudentsController/list_student': 'StudentsController.list_student',
-  'get /StudentsController/view_info_student/:id': 'StudentsController.view_info_student',
-  'post /StudentsController/update_student/:id': 'StudentsController.update_student',
+  'get /StudentsController/list_student': 'StudentsController.list_student',      //-----
+  'get /StudentsController/view_info_student/:id': 'StudentsController.view_info_student',  //-----
+  'post /StudentsController/update_student/:id': 'StudentsController.update_student',     
   'get /StudentsController/delete_student/:id': 'StudentsController.delete_student',
 
   // 'post /FacultiesController/insert_beaconfaculty': 'FacultiesController.insert_masterfaculty',
@@ -75,10 +76,11 @@ module.exports.routes = {
   'post /FacultiesController/update_faculty/:fac_id': 'FacultiesController.update_faculty',
   'get /FacultiesController/list_faculty': 'FacultiesController.list_faculty',
   'get /FacultiesController/view_info_faculty/:fac_id': 'FacultiesController.view_info_faculty',
-  'get /FacultiesController/delete_faculty/:fac_id': 'FacultiesController.delete_faculty',
+  'get /FacultiesController/delete_faculty/:fac_id': 'FacultiesController.delete_faculty'
 
 
-   //'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student'
+
+   // 'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student'
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

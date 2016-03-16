@@ -19,7 +19,7 @@ insert_student: function(req, res) {
     var dob = param.dob;
     var clas = param.stud_class;
     var div = param.stud_div;
-    var uuid = '11111';
+    var uuid = '343434343';
 
             Student.create({ 
               name: nm,
@@ -49,7 +49,7 @@ insert_student: function(req, res) {
                 {
                    var id = userid[0].gr_no_s;
                    var maj = Number(clas.concat((div.charCodeAt(0)).toString()));
-              
+                  
                    Beacon_student.query('select minor from beacon_students where major = '+maj+' order by minor desc;',function(err3,user) {
                     if(err3) {
                       return res.send(err3);
