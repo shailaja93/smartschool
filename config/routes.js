@@ -43,7 +43,7 @@ module.exports.routes = {
   'POST /user/create_admin' : 'class_adminController.userCreate',  
   'GET /user/user_login' : 'class_adminController.userLogin',
   'GET /user/list_user' : 'class_adminController.userList',
-  'POST /user/update_user' : 'class_adminController.userUpdate'
+  'POST /user/update_user' : 'class_adminController.userUpdate',
   
   // 'get /LoginController/afterlogin_authenticate': 'LoginController.afterlogin_authenticate',
 
@@ -78,7 +78,7 @@ module.exports.routes = {
   'get /FacultiesController/delete_faculty/:fac_id': 'FacultiesController.delete_faculty',
 
 
-   'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student'
+   //'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student'
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

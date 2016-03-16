@@ -21,7 +21,7 @@ module.exports.models = {
    connection: 'someMysqlServer',
    autoCreatedAt: false,
    autoUpdatedAt: false,
-   schema : false
+   schema : false,
 
   /***************************************************************************
   *                                                                          *
