@@ -4,35 +4,33 @@ module.exports = {
 
 	getBeaconInfo : function (req, res) {
 
-        var obj = [{
+        // var obj = [{
         
-                "major": 35035,
-                "minor": 64,
-                "flag": 1,
-        },
-        {
+        //         "major": 35035,
+        //         "minor": 64,
+        //         "flag": 1,
+        // },
+        // {
         
-                "major": 35035,
-                "minor": 64,
-                "flag": 0
-        },
-        {
+        //         "major": 35035,
+        //         "minor": 64,
+        //         "flag": 0
+        // },
+        // {
         
-                "major": 35035,
-                "minor": 63,
-                "flag": 1
-        },
-        {
+        //         "major": 35035,
+        //         "minor": 63,
+        //         "flag": 1
+        // },
+        // {
         
-                "major": 35035,
-                "minor": 63,
-                "flag": 0
-        }]
+        //         "major": 35035,
+        //         "minor": 63,
+        //         "flag": 0
+        // }]
 
-        var param = req.allParams();
-
-        console.log(obj.length);
-        console.log("-----");
+        var obj = req.body;
+        console.log(obj);
         async.forEachOfSeries(obj, function(value,key,callback) {
 
             
@@ -67,14 +65,13 @@ module.exports = {
 
                                         if(err) {
                                          
-                                         console.log("+++++++");
+                
                                          return err;    
                                         }
 
                                         else {
                                     
                                         console.log("++++");
-                                        // console.log();
                                         callback();
                                         return res.status(200);
                                         }
@@ -82,8 +79,6 @@ module.exports = {
 
                  }
                 });
-                    
-        console.log(key);
         });
     }    
 };

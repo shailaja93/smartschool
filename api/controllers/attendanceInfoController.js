@@ -1,37 +1,65 @@
+var async = require('async');
+
 module.exports = {
 
 	displayAttendance : function(req, res) {
 
 		var value_major = 35035;
-    	var value_minor = 64;
-    	var date = "'2016-03-07'";    
+    	
+    var date = "'2016-03-07'";
+    var data = [];
+    var data1 = [];
 
-    	   Beacon_student.find({major : value_major,minor : value_minor}, {select : ['gr_no_bs']})
-    		.exec(function(err, user) {
+      Beacon_student.find({major : value_major}, {select : ['gr_no_bs','minor']})
+           .exec(function(err, user) {            
 
-    		if(err) 
-    			res.badRequest('reason');
+        if (err) return res.serverError(err);
 
-    		var data = {
-                 user_data : user,
-        	};
+//        console.log(user);
+        async.forEachOfSeries(user, function(value,key,callback) {
+   
+          var gr_no = user[key].gr_no_bs;
+      //    console.log(key + "---->" + user.length);
 
-			var len = data.user_data.length;
-			var grno = user[0].gr_no_bs;
-			console.log(grno);
-			console.log(user);
-        	if(len == 1) {
+          Student.find({gr_no_s : gr_no}, {select : ['gr_no_s','name','surname']})
+            .exec(function(err, user1) {
 
-    				Transaction_student.query('SELECT * FROM transaction_students WHERE gr_no_ts = ' +grno+ ' AND DATE(time_stamp) = '+date+';', function(err, user) {
-  						if (err) return res.serverError(err);
+            if(err) 
+              res.badRequest('reason');
 
-  						console.log("----");
-  						res.status(200);
-  						return res.json(user);
-					});
-    		}
+             data = data.concat(user1);
+             callback();
+            console.log(data);
+            // res.json(data);
+          });
+       });
+    });
+   //  	   Beacon_student.find({major : value_major,minor : value_minor}, {select : ['gr_no_bs']})
+   //  		.exec(function(err, user) {
 
-    	});
+   //  		if(err) 
+   //  			res.badRequest('reason');
+
+   //  		var data = {
+   //               user_data : user,
+   //      	};
+
+			// var len = data.user_data.length;
+			// var grno = user[0].gr_no_bs;
+			// console.log(grno);
+			// console.log(user);
+   //      	if(len == 1) {
+
+   //  				Transaction_student.query('SELECT * FROM transaction_students WHERE gr_no_ts = ' +grno+ ' AND DATE(time_stamp) = '+date+';', function(err, user) {
+  	// 					if (err) return res.serverError(err);
+
+  	// 					console.log("----");
+  	// 					res.status(200);
+  	// 					return res.json(user);
+			// 		});
+   //  		}
+
+   //  	});
 	},
 
   attendance_student: function(req,res) {
