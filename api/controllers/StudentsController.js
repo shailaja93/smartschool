@@ -9,6 +9,7 @@ module.exports = {
 
 insert_student: function(req, res) {
 
+console.log("----");
 	  var param = req.allParams();
     var nm = param.name;
     var snm = param.surname;

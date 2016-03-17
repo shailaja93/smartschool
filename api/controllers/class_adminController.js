@@ -100,7 +100,7 @@ module.exports = {
   
       });
   },
-
+  
     userUpdate : function(req, res) {
      
       req.accepts('application/json');
@@ -136,6 +136,7 @@ module.exports = {
             return err;
           }
           console.log(user);
+          console.log(user.length);
           res.status(200);
           return res.json('Data Updated');
      //      User.find({select: ['id','username','password','major_student','major_faculty']})

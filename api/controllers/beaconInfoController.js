@@ -30,14 +30,15 @@ module.exports = {
         // }]
 
         var obj = req.body;
-        // console.log(obj);
+        console.log(obj);
+        console.log(obj[0].minor + " ---- " + obj[0].major);
         async.forEachOfSeries(obj, function(value,key,callback) {
 
             
             var value_major = obj[key].major;
             var value_minor = obj[key].minor;
             var flag = obj[key].flag;
-            console.log(key + "---->" + obj.length);
+            // console.log(key + "---->" + obj.length);
 
             Beacon_student.find({major : value_major,minor : value_minor}, {select : ['gr_no_bs']})
             .exec(function(err, user) {
@@ -49,7 +50,7 @@ module.exports = {
                     user_data : user,
                 };
 
-                console.log(user);
+          //      console.log(user);
                 var len = data.user_data.length;
 
                 if(len == 1) {
