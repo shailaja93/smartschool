@@ -213,11 +213,16 @@ module.exports = {
  
    attendance_currentday :function(req,res) {
 
-         var d = "'2016-03-16'";
-         Attendance_student.query('select minor_as,presence from attendance_students where DATE(date) = '+ d +' order by date asc;',function(err2,user) {
+         var param = req.params.all();
+         var classNo = param.stud_class();
+         var classDiv = param.stud_div();
+         var major = Number(classNo.concat((classDiv.charCodeAt(0)).toString()));
+         
+         Attendance_student.query('SELECT students.name, students.surname, attendance_students.gr_no_as, attendance_students.minor_as, attendance_students.presence FROM students INNER JOIN attendance_students ON students.gr_no_s = attendance_students.gr_no_as where major_as = '+ major +' AND DATE(date) = DATE(CURDATE());',function(err2,user) {
          if (err2) {
              return res.send(err2);
          }
+      
          console.log(user);
    });
   }

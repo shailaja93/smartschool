@@ -29,12 +29,13 @@ insert_student: function(req, res) {
               primary_contact_no: pc,
               secondary_contact_no: sc,
               dob: dob
-            }).exec(function(err1, usercreate) {
+            }).exec(function(err1, user) {
             	  if (err1) {
                //    console.log("++++++");
                       return res.send(err1);
                 }
-                
+                console.log("---------------------------------");
+                console.log(user);
            // Student.query('insert into students values(' + 29+",ppp0,"+"popop,"+"sasasas,"+"Aaa,"+"KLKLKL,"+"SALKALSK,"+"KSKSK ,"+0+');', function(err,usercreate) {
 
               // if(err) 
@@ -54,8 +55,9 @@ insert_student: function(req, res) {
                     if(err3) {
                       return res.send(err3);
                     }
-                  
+                    console.log("---------------------------");
                     var min;
+                 //   console.log(user);
                     if(user[0] != undefined)
                     {
                       min = user[0].minor + 1;
@@ -63,22 +65,25 @@ insert_student: function(req, res) {
                     else
                     {
                       min = 1;
+
                     }
-               
-                   Beacon_student.create({ 
-                   gr_no_bs: id,
-                   uuid: uuid,
-                   major: maj,
-                   minor: min
-                   }).exec(function(err4, user) {
-                    if (err4) {
-                         return res.send(err4);
-                    }
-                  var data = { 
-                      Count_user: user
-                  };
-                  
-                  return res.json(user);
+                   console.log(maj);
+
+
+                   Beacon_student.query('INSERT INTO beacon_students (gr_no_bs, uuid, major, minor) VALUES ('+id+','
+                                        + uuid + ',' + maj + ',' + min + ');', function(err, user) {
+              //      Beacon_student.create({ 
+              //      gr_no_bs: id,
+              //      uuid: uuid,
+              //      major: maj,
+              //      minor: min
+              //      }).exec(function(err4, user) {
+                    if (err) {
+                          console.log("-+-+-+-");
+                         return res.send(err);
+                    }  
+                    console.log(user);
+                    return res.ok();
               });
             });
           }
@@ -177,6 +182,7 @@ delete_student: function(req,res)
          })
         .exec(function(err, user) {
           console.log(user);
+          console.log("---------------------------");
           if(user.length == 0)
           {
             res.send("No such id exists");
@@ -193,7 +199,8 @@ delete_student: function(req,res)
             if (err) {
                return res.send(err);
             }
-            
+            console.log("+++++++++++++++++++++++++++");
+            console.log(user);
             return res.json(user);
             });
             }
