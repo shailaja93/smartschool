@@ -29,11 +29,42 @@ module.exports = {
         //         "flag": 0
         // }]
 
+
+
+        // var array : 
+        // var str = "";
+        // for (idex,object) in array.enumarate() {
+        //     //object
+        //     if index < array.count - 1 {
+        //         let strObject = createStringFromJson(2,3,4);
+        //         str = str + strObject + ","
+        //     }
+        // }
+
+        // var strWithlast = str + createStringFromJson(5,6,7);
+        // var finalStr = "[" + strWithlast + "]"
+
+
+        // var array : 
+        // var strObjectArray : Array<String> = Array();
+        // for (idex,object) in array.enumarate() {
+        //     //object
+        //     if index < array.count - 1 {
+        //         strObjectArray.append(createStringFromJson(2,3,4));
+        //     }
+        // }
+
+        // var stringWithCommaObject = strObjectArray.commponentJoinByString(",")
+        // var finalStr = "[" + stringWithCommaObject + "]"
+
+
+
+
+
         var obj = req.body;
         console.log(obj);
         console.log(obj[0].minor + " ---- " + obj[0].major);
         async.forEachOfSeries(obj, function(value,key,callback) {
-
             
             var value_major = obj[key].major;
             var value_minor = obj[key].minor;

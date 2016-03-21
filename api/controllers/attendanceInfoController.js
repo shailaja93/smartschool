@@ -37,16 +37,16 @@ module.exports = {
 
   DisplayStudentAttendance : function(req, res) {
 
-      // var obj = req.body;
+      var param = req.allParams();
       // console.log(obj);
       console.log("----");
-      var gr_no =  11142; //obj[0].gr_no_ts; 
-      var date = "'2016-03-16'";
+      var gr_no =  11142;//param.id;
+      var date = param.date;
       var data = [];
 
 			console.log(gr_no);
 
-    				Transaction_student.query('SELECT * FROM transaction_students WHERE gr_no_ts = ' + gr_no + ' AND DATE(time_stamp) = '+date+' ORDER BY time_stamp ASC;', function(err, user) {
+    				Transaction_student.query('SELECT * FROM transaction_students WHERE gr_no_ts = ' + gr_no + ' AND DATE(time_stamp) = "'+date+'" ORDER BY time_stamp ASC;', function(err, user) {
   						if (err) return res.serverError(err);
 
   						res.status(200);
