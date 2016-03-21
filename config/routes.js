@@ -57,8 +57,9 @@ module.exports.routes = {
   'post /StudentsController/insert_student': 'StudentsController.insert_student',
   'get /StudentsController/list_student': 'StudentsController.list_student',      //-----
   'get /StudentsController/view_info_student/:id': 'StudentsController.view_info_student',  //-----
-  'post /StudentsController/update_student/:id': 'StudentsController.update_student',     
+  'post /StudentsController/update_student': 'StudentsController.update_student',     
   'get /StudentsController/delete_student/:id': 'StudentsController.delete_student',
+  'post /StudentsController/uploadfile_student': 'StudentsController.uploadfile_student',
 
   // 'post /FacultiesController/insert_beaconfaculty': 'FacultiesController.insert_masterfaculty',
   // 'get /FacultiesController/list_masterfaculty': 'FacultiesController.list_masterfaculty',

@@ -4,7 +4,9 @@
  * @description :: Server-side logic for managing crud_masterstudents
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-
+var converter = require('json-2-csv');
+var async = require('async');
+var fs = require('fs');
 module.exports = {
 
 insert_student: function(req, res) {
@@ -20,7 +22,9 @@ insert_student: function(req, res) {
     var clas = param.stud_class;
     var div = param.stud_div;
     var uuid = '343434343';
+    var data;
 
+    
             Student.create({ 
               name: nm,
               surname: snm,
@@ -50,6 +54,7 @@ insert_student: function(req, res) {
                 {
                    var id = userid[0].gr_no_s;
                    var maj = Number(clas.concat((div.charCodeAt(0)).toString()));
+                   console.log(maj);
                   
                    Beacon_student.query('select minor from beacon_students where major = '+maj+' order by minor desc;',function(err3,user) {
                     if(err3) {
@@ -57,7 +62,7 @@ insert_student: function(req, res) {
                     }
                     console.log("---------------------------");
                     var min;
-                 //   console.log(user);
+                    console.log(user);
                     if(user[0] != undefined)
                     {
                       min = user[0].minor + 1;
@@ -67,17 +72,17 @@ insert_student: function(req, res) {
                       min = 1;
 
                     }
-                   console.log(maj);
+                   console.log(min);
 
 
-                   Beacon_student.query('INSERT INTO beacon_students (gr_no_bs, uuid, major, minor) VALUES ('+id+','
-                                        + uuid + ',' + maj + ',' + min + ');', function(err, user) {
-              //      Beacon_student.create({ 
-              //      gr_no_bs: id,
-              //      uuid: uuid,
-              //      major: maj,
-              //      minor: min
-              //      }).exec(function(err4, user) {
+                   // Beacon_student.query('INSERT INTO beacon_students (gr_no_bs, uuid, major, minor) VALUES ('+id+','
+                   //                      + uuid + ',' + maj + ',' + min + ');', function(err, user) {
+                   Beacon_student.create({ 
+                   gr_no_bs: id,
+                   uuid: uuid,
+                   major: maj,
+                   minor: min
+                   }).exec(function(err, user) {
                     if (err) {
                           console.log("-+-+-+-");
                          return res.send(err);
@@ -130,7 +135,8 @@ update_student: function(req, res) {
       {
        console.log("**********************************************************");
        console.log(user);
-       return res.json(user);
+       return res.send("Data Updated");
+       //return res.json(user);
       }
     });
 },
@@ -150,11 +156,29 @@ list_student: function(req, res) {
           }
           else
           {
-              res.json(user);
+              // var json2csvCallback = function (err, csv) {
+              // if (err) throw err;
+              // fs.writeFile('file1.csv', csv, function(err) {
+              // if (err) throw err;
+              // console.log(csv);
+              // console.log('CSV file saved');
+              // });
+              // }
+              // converter.json2csv(user, json2csvCallback);
+
+              // var fileContents = fs.readFileSync('file1.csv');
+              // var lines = fileContents.toString();
+              // var csv2jsonCallback = function (err, json) {
+              //  if (err) throw err;
+              //     console.log(json.length);
+              //     console.log(json);
+              //  }
+              // converter.csv2json(lines, csv2jsonCallback);
+               res.json(user);
           }   
       });  
   },
-
+  
 view_info_student: function(req,res) {
 
       var param = req.allParams();
@@ -183,6 +207,7 @@ delete_student: function(req,res)
         .exec(function(err, user) {
           console.log(user);
           console.log("---------------------------");
+          console.log(user.length);
           if(user.length == 0)
           {
             res.send("No such id exists");
@@ -206,6 +231,112 @@ delete_student: function(req,res)
             }
           }
   });     
+ },
+
+ uploadfile_student: function(req,res)
+ {
+    var uuid = '343434343';
+    console.log("-------");
+    req.file('name').upload({dirname: require('path').resolve(sails.config.appPath, './assets/csv'),
+                              saveAs : 'saaailja.csv'},function (err, files) {
+      if (err)
+        return res.serverError(err);
+
+      return res.json({
+        message: files.length + ' file(s) uploaded successfully!',
+        files: files
+      });
+    });
+
+    console.log("---------");
+    var fileContents = fs.readFileSync('./assets/csv/students.csv');
+    var lines = fileContents.toString();
+    var csv2jsonCallback = function (err, json) {
+    if (err) throw err;
+
+      console.log(json);
+
+      // var i =0;
+      // async.eachSeries(json, function (l, callback) {  
+      //     console.log(i + " -- " + json.length);
+      //     var c = json[i].class;
+      //   //  var d = json[i].div;
+
+      //     Student.create({
+      //                   name: json[i].name,
+      //                   surname: json[i].surname,
+      //                   address: json[i].address,
+      //                   blood_group: json[i].blood_group,
+      //                   primary_contact_no: json[i].primary_contact_no,
+      //                   secondary_contact_no: json[i].secondary_contact_no,
+      //                   dob: json[i].dob
+      //                   }).exec(function(err, user) {
+
+      //                     if(err) return callback(err);
+                          
+      //                     Student.query('select gr_no_s from students order by gr_no_s desc;',function(err2,userid) {
+      //                     if (err2) {
+      //                       return callback(err2);
+      //                     }
+      //                     else
+      //                     {
+      //                        var id = userid[0].gr_no_s;
+      //                        console.log(id);
+      //                        console.log("***********");
+      //                        console.log(c);
+      //                       // console.log(d);
+                             
+      //                        var class_div =  (c.slice(-1)).charCodeAt(0);
+      //                        var class_no = c.slice(0, -1);
+      //                        var maj = Number(class_no.concat(class_div));
+      //                        console.log(maj);
+                            
+      //                        Beacon_student.query('select minor from beacon_students where major = '+maj+' order by minor desc;',function(err3,user) {
+      //                         if(err3) {
+      //                           return callback(err3);
+      //                         }
+      //                         console.log("---------------------------");
+      //                         var min;
+      //                         console.log(user);
+      //                         if(user[0] != undefined)
+      //                         {
+      //                           min = user[0].minor + 1;
+      //                         }
+      //                         else
+      //                         {
+      //                           min = 1;
+
+      //                         }
+      //                        console.log(min);
+
+
+      //                        // Beacon_student.query('INSERT INTO beacon_students (gr_no_bs, uuid, major, minor) VALUES ('+id+','
+      //                        //                      + uuid + ',' + maj + ',' + min + ');', function(err, user) {
+      //                        Beacon_student.create({ 
+      //                        gr_no_bs: id,
+      //                        uuid: uuid,
+      //                        major: maj,
+      //                        minor: min
+      //                        }).exec(function(err, user) {
+      //                         if (err) {
+      //                               console.log("-+-+-+-");
+      //                              return callback(err);
+      //                         }  
+      //                         console.log(user);
+      //                         return res.ok();
+      //                   });
+      //                 });
+      //               }
+      //             });
+                                
+      //                           console.log(user);
+      //                           i= i+1;
+      //                           console.log(i);
+      //                           console.log("-----------------------------------"); 
+      //                           callback();
+      //           });
+      //         });
+          }
+          converter.csv2json(lines, csv2jsonCallback);
  }
 };
-
