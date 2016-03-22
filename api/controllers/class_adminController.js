@@ -55,13 +55,13 @@ module.exports = {
     var password = param.user_pwd;
     var floor = param.floor;
     var teacher_major = 52555;
-    var uuid = 'B9407F30-F5F8-466E-AFF9-25556B57FE6';
-    var user_name = username + floor;
-    var user_pwd = password + floor;
-    console.log(user_pwd + " -- " + user_name);
+    var uuid = param.uuid;//'B9407F30-F5F8-466E-AFF9-25556B57FE6';
+    console.log(password + " -- " + username);
 
       if(username == 'washroom' || username == 'staffroom') {
         {
+          var user_name = username + floor;
+          var user_pwd = password + floor;
             User.create({username : user_name,
                         password : user_pwd,
                         uuid : uuid
@@ -102,8 +102,11 @@ module.exports = {
       } else {
 
             var class_div =  (username.slice(-1)).charCodeAt(0);
+            console.log(class_div);
             var class_no = username.slice(0, -1);
+            console.log(class_no);
             var student_major = Number(class_no.concat(class_div));
+            console.log(student_major);
 
             User.create({username :username,
                          password : password,
@@ -114,6 +117,7 @@ module.exports = {
 
                       if(err) {
 
+                        console.log(user);
                         return res.send('failure');
                       } else {
                         
