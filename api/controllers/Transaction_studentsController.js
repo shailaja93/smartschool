@@ -6,8 +6,15 @@
  */
 
 var async = require('async');
+/**
+ *@module Transaction Attendance StudentInfo
+ */
 module.exports = {
-	     
+/**
+   *At the end of the day(On click of logout) this function will be called.Inserts the attendance(present/absent) of the Student based on timestamps of their entry/exit in class.The student must be present in class for atleast 30 mins to mark his presence as Present. 
+   *@param {Object} req 
+   *@param {object} res 
+*/
 	attendance_student: function(req,res) {
        //var param = req.params.all();
        //var value_major = param.stud_major();
@@ -185,11 +192,21 @@ module.exports = {
     });                           
    },
 
+/**
+   *Displays the presence history to the month and year passed of a specific student
+   *@param {Object} req Parameters(month,year)
+   *@param {object} res 
+   *@return {Object} json Object
+*/
    attendance_permonth :function(req,res) {
 
-   var y = 2015;
-   var m = 03;
-   var grno = 35;
+       var param = req.params.all();
+       var y = param.month;
+       var m = param.year;
+       var grno = param.gr_no_s;
+       // var y = 2015;
+       // var m = 03;
+       // var grno = 35;
          Attendance_student.query('select presence,date from attendance_students where YEAR(date) = '+ y +' AND MONTH(date) = '+ m +' AND gr_no_as = '+ grno +' order by date asc;',function(err2,user) {
          if (err2) {
              return res.send(err2);
@@ -208,9 +225,14 @@ module.exports = {
           console.log(user);
          }
        });
-
    },
  
+/**
+   *Displays the current day attendance of the class passed
+   *@param {Object} req Parameters(stud_class,stud_div)
+   *@param {object} res 
+   *@return {Object} json Object
+*/
    attendance_currentday :function(req,res) {
 
          var param = req.params.all();
