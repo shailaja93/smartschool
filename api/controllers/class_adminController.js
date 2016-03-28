@@ -20,6 +20,7 @@ module.exports = {
       	console.log(username);
       	console.log(password);
 
+
       User.find({username: username,password : password }, {select: ['username','major_student', 'major_faculty','uuid']})
       .exec(function(err, user) {
         if(err) {
@@ -31,7 +32,9 @@ module.exports = {
                    Count_user : user
         };
     	var len = data.Count_user.length;        
-    
+
+		req.session.username = user[0].username;
+    	
     	if(len == 1)
     	{
           console.log(req.session.username = user[0].username);
