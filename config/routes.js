@@ -37,8 +37,9 @@ module.exports.routes = {
   },
   'POST /user/beacon_info' : 'beaconInfoController.getBeaconInfo',  //---
   
-  'GET /user/attendance_info' : 'attendanceInfoController.displayAttendance',
-  'GET /user/attendance_student' : 'attendanceInfoController.attendance_student',
+  'GET /student/student_info' : 'attendanceInfoController.displayStudent',
+  'GET /student/student_location_timestamp' : 'attendanceInfoController.displayStudentAttendance',
+  'GET /student/attendance_student' : 'attendanceInfoController.attendance_student',
 
 
   'POST /user/create_admin' : 'class_adminController.userCreate',  //-------
@@ -76,10 +77,9 @@ module.exports.routes = {
   'post /FacultiesController/update_faculty/:fac_id': 'FacultiesController.update_faculty',
   'get /FacultiesController/list_faculty': 'FacultiesController.list_faculty',
   'get /FacultiesController/view_info_faculty/:fac_id': 'FacultiesController.view_info_faculty',
-  'get /FacultiesController/delete_faculty/:fac_id': 'FacultiesController.delete_faculty'
+  'get /FacultiesController/delete_faculty/:fac_id': 'FacultiesController.delete_faculty',
 
-
-
+  'get /Transaction_studentsController/attendance_currentday': 'Transaction_studentsController.attendance_currentday'
    // 'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student'
   /***************************************************************************
   *                                                                          *
