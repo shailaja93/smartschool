@@ -6,6 +6,9 @@
  */
 
 var async = require('async');
+/**
+ *@module Transaction Attendance StudentInfo
+ */
 module.exports = {
 	
   attendance_currentday :function(req,res) {
@@ -25,14 +28,20 @@ module.exports = {
   });
  },
 
+=======
+/**
+   *At the end of the day(On click of logout) this function will be called.Inserts the attendance(present/absent) of the Student based on timestamps of their entry/exit in class.The student must be present in class for atleast 30 mins to mark his presence as Present. 
+   *@param {Object} req 
+   *@param {object} res 
+*/
+>>>>>>> new-beta
 	attendance_student: function(req,res) {
-     
        //var param = req.params.all();
        //var value_major = param.stud_major();
        var value_major = 1265;
        //---------------------------------------------------------------------------------
-                                function hmsToSeconds(b) {
-                                 // var b = s.split(':');
+                                function hmsToSeconds(s) {
+                                  var b = s.split(':');
                                   return b[0]*3600 + b[1]*60 + (+b[2] || 0);
                                 }     
                                 function secondsToHMS(secs) {
@@ -63,7 +72,7 @@ module.exports = {
                var data = {
                    user_data : user,
            };
-         //  console.log(data);
+           console.log(data);
            
        
         var i =0;
@@ -129,36 +138,26 @@ module.exports = {
                     var finalresult;
                     for(var k = 0,j = 1 ; k < len, j < len ; k = k + 2, j = j + 2)
                     {
-                       console.log("--------------VALUE OF k-----------");
-                       console.log(k);
-                            console.log("--------------VALUE OF j-----------");
-                            console.log(j);
-                             var a = user1[k].time_stamp;
-                             var b = user1[j].time_stamp; 
+                               console.log("--------------VALUE OF k-----------");
+                               console.log(k);
+                               console.log("--------------VALUE OF j-----------");
+                               console.log(j);
+                               var a = user1[k].time_stamp.toLocaleTimeString();
+                               var b = user1[j].time_stamp.toLocaleTimeString(); 
+                               console.log(a);
+                               console.log(b);
                              
-                               var arr1 = [];
-                               var arr2 = [];
-                               
-                               arr1[0] = a.getHours();
-                               arr1[1] = a.getMinutes();
-                               arr1[2] = a.getSeconds();
-                               arr2[0] = b.getHours();
-                               arr2[1] = b.getMinutes();
-                               arr2[2] = b.getSeconds();
-                               console.log(arr1);
-                               console.log(arr2);
-  
-                            //   var append = secondsToHMS(hmsToSeconds(arr2) - hmsToSeconds(arr1));
-                                 var append = calc(arr2,arr1);
-                               if(c == 0)
-                               {
-                                 c = append;
-                               }
-                               else
-                               {
-                                  c = sum(c,append); 
-                               } 
-                               console.log(c);    
+                                var append = secondsToHMS(hmsToSeconds(b) - hmsToSeconds(a));
+                                console.log(append);
+                                 if(c == 0)
+                                 {
+                                   c = append;
+                                 }
+                                 else
+                                 {
+                                    c = sum(c,append); 
+                                 } 
+                                 console.log(c);    
                     }
                     var c_split = c.split(':');
                     if(c_split[0] > 30)
@@ -205,10 +204,74 @@ module.exports = {
             console.log("---AFTER INCREMENT-----");
             i= i+1;
             console.log(i);
+            console.log("-----------------------------------"); 
             callback();
 		      }); 
         });
 
-    });                           
+    });
    }
 };
+
+   },
+
+/**
+   *Displays the presence history to the month and year passed of a specific student
+   *@param {Object} req Parameters(month,year)
+   *@param {object} res 
+   *@return {Object} json Object
+*/
+   attendance_permonth :function(req,res) {
+
+       var param = req.params.all();
+       var y = param.month;
+       var m = param.year;
+       var grno = param.gr_no_s;
+       // var y = 2015;
+       // var m = 03;
+       // var grno = 35;
+         Attendance_student.query('select presence,date from attendance_students where YEAR(date) = '+ y +' AND MONTH(date) = '+ m +' AND gr_no_as = '+ grno +' order by date asc;',function(err2,user) {
+         if (err2) {
+             return res.send(err2);
+         }
+
+         if(user.length == 0)
+         {
+          console.log("Please enter valid month/year");
+         }
+         else
+         {
+          for(var i = 0;i < user.length; i++)
+          {
+            user[i].date = user[i].date.toLocaleDateString();
+          }
+          console.log(user);
+         }
+       });
+   },
+ 
+/**
+   *Displays the current day attendance of the class passed
+   *@param {Object} req Parameters(stud_class,stud_div)
+   *@param {object} res 
+   *@return {Object} json Object
+*/
+   attendance_currentday :function(req,res) {
+
+         var param = req.params.all();
+         var classNo = param.stud_class;
+         var classDiv = param.stud_div;
+         var major = Number(classNo.concat((classDiv.charCodeAt(0)).toString()));
+         console.log(major);
+         
+         Attendance_student.query('SELECT students.name, students.surname, attendance_students.gr_no_as, attendance_students.minor_as, attendance_students.presence FROM students INNER JOIN attendance_students ON students.gr_no_s = attendance_students.gr_no_as where major_as = '+ major +' AND DATE(date) = DATE(CURDATE());',function(err2,user) {
+         if (err2) {
+             return res.send(err2);
+         }
+         
+         console.log(user);
+         return res.json(user);
+   });
+  }
+};
+

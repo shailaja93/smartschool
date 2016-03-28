@@ -19,8 +19,8 @@ module.exports = {
        presence: {
             type: 'INTEGER'
        },
-       date : {
-            type: 'DATETIME' 
+       date: {
+           type: 'DATETIME'
        }
   }
 };

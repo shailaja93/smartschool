@@ -58,8 +58,9 @@ module.exports.routes = {
   'post /StudentsController/insert_student': 'StudentsController.insert_student',
   'get /StudentsController/list_student': 'StudentsController.list_student',      //-----
   'get /StudentsController/view_info_student/:id': 'StudentsController.view_info_student',  //-----
-  'post /StudentsController/update_student/:id': 'StudentsController.update_student',     
-  'get /StudentsController/delete_student/:id': 'StudentsController.delete_student',
+  'post /StudentsController/update_student': 'StudentsController.update_student',     
+  'get /StudentsController/delete_student': 'StudentsController.delete_student',
+  'post /StudentsController/uploadfile_student': 'StudentsController.uploadfile_student',
 
   // 'post /FacultiesController/insert_beaconfaculty': 'FacultiesController.insert_masterfaculty',
   // 'get /FacultiesController/list_masterfaculty': 'FacultiesController.list_masterfaculty',
@@ -74,13 +75,17 @@ module.exports.routes = {
   // 'get /Beacon_studentsController/delete_beaconstudent/:id': 'Beacon_studentsController.delete_beaconstudent',
 
   'post /FacultiesController/insert_faculty': 'FacultiesController.insert_faculty',
-  'post /FacultiesController/update_faculty/:fac_id': 'FacultiesController.update_faculty',
+  'post /FacultiesController/update_faculty': 'FacultiesController.update_faculty',
   'get /FacultiesController/list_faculty': 'FacultiesController.list_faculty',
-  'get /FacultiesController/view_info_faculty/:fac_id': 'FacultiesController.view_info_faculty',
-  'get /FacultiesController/delete_faculty/:fac_id': 'FacultiesController.delete_faculty',
+  'get /FacultiesController/view_info_faculty/:id': 'FacultiesController.view_info_faculty',
+  'get /FacultiesController/delete_faculty': 'FacultiesController.delete_faculty',
+  'post /FacultiesController/uploadfile_faculty': 'FacultiesController.uploadfile_faculty',
 
-  'get /Transaction_studentsController/attendance_currentday': 'Transaction_studentsController.attendance_currentday'
-   // 'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student'
+
+
+   'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student',
+   'get /Transaction_studentsController/attendance_permonth': 'Transaction_studentsController.attendance_permonth',
+   'get /Transaction_studentsController/attendance_currentday': 'Transaction_studentsController.attendance_currentday'
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
