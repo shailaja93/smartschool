@@ -104,7 +104,7 @@ console.log("----");
 
 /**
    *Updates the information of a specific student 
-   *@param {Object} req json object passed 
+   *@param {Object} req json object passed Parameters(gr_no_s,name,surname,address,blood_group,primary_contact_no,secondary_contact_no,dob)
    *@param {object} res
 */
 update_student: function(req, res) {
@@ -151,7 +151,6 @@ update_student: function(req, res) {
       }
     });
 },
-
 /**
    *Lists the information of the students 
    *@param {Object} req
@@ -218,7 +217,6 @@ view_info_student: function(req,res) {
         return res.json(user);
       });
 },
-
 /**
    *Updates the flag is_delete to 1 of a specific student 
    *@param {Object} req Parameters(id) 
@@ -260,7 +258,6 @@ delete_student: function(req,res)
           }
   });     
  },
-
 /**
    *Inserts the information of the students from the CSV file provided (CSV should contain the fields : name,surname,address,blood_group,primary_contact_no,secondary_contact_no,dob,stud_class(Eg:10A)) 
    *@param {Object} req File Prameters(name) 

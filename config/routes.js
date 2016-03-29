@@ -35,38 +35,19 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  'POST /user/beacon_info' : 'beaconInfoController.getBeaconInfo',  //---
   
-  'GET /student/student_info' : 'attendanceInfoController.displayStudent',
-  'GET /student/student_location_timestamp' : 'attendanceInfoController.displayStudentAttendance',
-  'GET /student/attendance_student' : 'attendanceInfoController.attendance_student',
-
-
-  'POST /user/create_admin' : 'class_adminController.userCreate',  //-------
-  'GET /user/user_login' : 'class_adminController.userLogin',   //----
-  'GET /user/list_user' : 'class_adminController.userList',     //----
-  'POST /user/update_user' : 'class_adminController.userUpdate',  //----
+  'post /UsersController/create_user' : 'UsersController.create_user',  
+  'get /UsersController/login_user' : 'UsersController.login_user',   
+  'get /UsersController/list_user' : 'UsersController.list_user',     
+  'post /UsersController/update_user' : 'UsersController.update_user', 
+  'get /UsersController/delete_user' : 'UsersController.delete_user',
   
-  // 'get /LoginController/afterlogin_authenticate': 'LoginController.afterlogin_authenticate',
-
-  // 'post /UsersController/insert_user': 'UsersController.insert_user',
-  // 'get /UsersController/list_user': 'UsersController.list_user',
-  // 'get /UsersController/view_info_user/:id': 'UsersController.view_info_user',
-  // 'get /UsersController/update_user/:id': 'UsersController.update_user',
-  // 'get /UsersController/delete_user/:id': 'UsersController.delete_user',
-
   'post /StudentsController/insert_student': 'StudentsController.insert_student',
-  'get /StudentsController/list_student': 'StudentsController.list_student',      //-----
-  'get /StudentsController/view_info_student/:id': 'StudentsController.view_info_student',  //-----
+  'get /StudentsController/list_student': 'StudentsController.list_student',      
+  'get /StudentsController/view_info_student/:id': 'StudentsController.view_info_student',  
   'post /StudentsController/update_student': 'StudentsController.update_student',     
   'get /StudentsController/delete_student': 'StudentsController.delete_student',
   'post /StudentsController/uploadfile_student': 'StudentsController.uploadfile_student',
-
-  // 'post /FacultiesController/insert_beaconfaculty': 'FacultiesController.insert_masterfaculty',
-  // 'get /FacultiesController/list_masterfaculty': 'FacultiesController.list_masterfaculty',
-  // 'get /FacultiesController/view_info_masterfaculty/:id': 'FacultiesController.view_info_masterfaculty',
-  // 'put /FacultiesController/update_beaconfaculty/:id': 'FacultiesController.update_masterfaculty',
-  // 'get /FacultiesController/delete_masterfaculty/:id': 'FacultiesController.delete_masterfaculty'
 
   // 'post /Beacon_studentsController/insert_beaconstudent': 'Beacon_studentsController.insert_beaconstudent',
   // 'get /Beacon_studentsController/update_beaconstudent': 'Beacon_studentsController.update_beaconstudent',
@@ -81,11 +62,12 @@ module.exports.routes = {
   'get /FacultiesController/delete_faculty': 'FacultiesController.delete_faculty',
   'post /FacultiesController/uploadfile_faculty': 'FacultiesController.uploadfile_faculty',
 
+  'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student',
+  'get /Transaction_studentsController/attendance_permonth': 'Transaction_studentsController.attendance_permonth',
+  'get /Transaction_studentsController/attendance_currentday': 'Transaction_studentsController.attendance_currentday',
+  'get /Transaction_studentsController/student_locationhistory' : 'Transaction_studentsController.student_locationhistory',
+  'post /Transaction_studentsController/insert_per_transaction_student_faculty' : 'Transaction_studentsController.insert_per_transaction_student_faculty'
 
-
-   'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student',
-   'get /Transaction_studentsController/attendance_permonth': 'Transaction_studentsController.attendance_permonth',
-   'get /Transaction_studentsController/attendance_currentday': 'Transaction_studentsController.attendance_currentday'
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

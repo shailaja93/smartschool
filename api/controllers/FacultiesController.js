@@ -86,7 +86,7 @@ module.exports = {
 
 /**
    *Updates the information of a specific faculty 
-   *@param {Object} req json object passed 
+   *@param {Object} req json object passed Parameters(gr_no_f,name,surname,address,blood_group,primary_contact_no,secondary_contact_no,dob)
    *@param {object} res
 */
 update_faculty: function(req, res) {
