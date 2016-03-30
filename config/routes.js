@@ -62,12 +62,13 @@ module.exports.routes = {
   'get /FacultiesController/delete_faculty': 'FacultiesController.delete_faculty',
   'post /FacultiesController/uploadfile_faculty': 'FacultiesController.uploadfile_faculty',
 
-  'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student',
+  'post /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student',
   'get /Transaction_studentsController/attendance_permonth': 'Transaction_studentsController.attendance_permonth',
   'get /Transaction_studentsController/attendance_currentday': 'Transaction_studentsController.attendance_currentday',
   'get /Transaction_studentsController/student_locationhistory' : 'Transaction_studentsController.student_locationhistory',
-  'post /Transaction_studentsController/insert_per_transaction_student_faculty' : 'Transaction_studentsController.insert_per_transaction_student_faculty'
-
+  'post /Transaction_studentsController/insert_per_transaction_student_faculty' : 'Transaction_studentsController.insert_per_transaction_student_faculty',
+  'get /Transaction_studentsController/faculty_locationhistory' : 'Transaction_studentsController.faculty_locationHistory',
+  'get /Transaction_studentsController/list_facultyForLocationHistory' : 'Transaction_studentsController.list_facultyForLocationHistory',
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

@@ -17,7 +17,7 @@ module.exports = {
             type: 'INTEGER'
        },
        presence: {
-            type: 'INTEGER'
+            type: 'STRING'
        },
        date: {
            type: 'DATETIME'
