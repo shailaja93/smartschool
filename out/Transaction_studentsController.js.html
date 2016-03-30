@@ -35,6 +35,7 @@
 
 var async = require('async');
 /**
+ *@module Transaction Attendance StudentDetails
  */
 module.exports = {
 /**
@@ -193,203 +194,238 @@ insert_per_transaction_student_faculty : function (req, res) {
 }, 
 /**
   *At the end of the day(On click of logout) this function will be called.Inserts the attendance(present or absent) of the Student based on timestamps of their entry and exit in class.The student must be present in class for atleast 30 mins to mark his presence as Present 
-  *@param {Object} req Parameters(time1,time2,location,stud_major,minimum_time)
+  *@param {Object} req Parameters(StartTime,EndTime,MiniTime)
   *@param {object} res 
 */
 	attendance_student: function(req,res) {
-     //   //var param = req.params.all();
-     //   //var value_major = param.stud_major();
-     //   //var loc = param.location;
-     //   //var time1 = param.time1;
-     //   //var time2 = param.time2;
-     //   // var minimim_time = param.minimim_time;
-     //   // var minimum_time_split = minimum_time_split.split(':');
-     //   // var minimum_hrs = minimum_time_split[0];
-     //   // var minimum_min = minimum_time_split[1];
-     //   // var minimum_sec = minimum_time_split[2];
-     //   var value_major = 1265;
-     //   var loc = "'class'";
-     //   var time1 = "'08:00:00'";
-     //   var time2 = "'16:55:00'";
-     //   var minimum_hrs = 01;
-     //   var minimum_min = 00;
-     //   var minimum_sec = 00;
-     //   //---------------------------------------------------------------------------------
-     //                            function hmsToSeconds(s) {
-     //                              var b = s.split(':');
-     //                              return b[0]*3600 + b[1]*60 + (+b[2] || 0);
-     //                            }     
-     //                            function secondsToHMS(secs) {
-     //                            function z(n){return (n&lt;10?'0':'') + n;}
-     //                            var sign = secs &lt; 0? '-':'';
-     //                            secs = Math.abs(secs);
-     //                            return sign + z(secs/3600 |0) + ':' + z((secs%3600) / 60 |0) + ':' + z(secs%60);
-     //                            }
-     //                            function sum(c,append) {
-     //                                 var temp1 = c.split(':');
-     //                                 var temp2 = append.split(':');
-     //                                 var temp;
-     //                                 console.log(temp1);
-     //                                 console.log(temp2);
-     //                                 temp = (Number(temp1[0]) + Number(temp2[0])) + ':' + (Number(temp1[1]) + Number(temp2[1])) + ':' + (Number(temp1[2]) + Number(temp2[2]));
-     //                                 return temp;
-     //                            } 
-     //                            function calc(arr2,arr1) {
-     //                                 return (Number(arr2[0]) - Number(arr1[0])) + ':' + (Number(arr2[1]) - Number(arr1[1])) + ':' + (Number(arr2[2]) - Number(arr1[2]));
-     //                            }                               
-     //   //----------------------------------------------------------------------------------
-     //   console.log("------STARTING POINT-----");
-     //   Beacon_student.find({major : value_major}, {select : ['gr_no_bs','minor']})
-     //       .exec(function(err, user) {            
-     //           if(err)
-     //              res.badRequest('reason');           
-     //           var data = {
-     //               user_data : user,
-     //       };
-     //       console.log(user);
+       var param = req.params.all();
+       var value_major = '1A';
+       //var value_major = req.session.username;
+       var class_div =  (value_major.slice(-1)).charCodeAt(0);
+       console.log(class_div);
+       var class_no = value_major.slice(0, -1);
+       console.log(class_no);
+       var value_major = Number(class_no.concat(class_div));
+       console.log(value_major);
+       //var loc = req.session.username;
+       var loc = '1A';
+       var time1 = param.StartTime;
+       var time2 = param.EndTime;
+       var minimum_time = param.MiniTime;
+       var minimum_time_split = minimum_time.split(':');
+       var minimum_hrs = minimum_time_split[0];
+       var minimum_min = minimum_time_split[1];
+       var minimum_sec = minimum_time_split[2];
+       console.log(loc);
+       console.log(time1);
+       console.log(time2);
+       console.log(minimum_time);
+       console.log(minimum_hrs);
+       console.log(minimum_min);
+       console.log(minimum_sec);
+       // var value_major = 1265;
+       // var loc = "'class'";
+       // var time1 = "'08:00:00'";
+       // var time2 = "'16:55:00'";
+       // var minimum_hrs = 01;
+       // var minimum_min = 00;
+       // var minimum_sec = 00;
+       //---------------------------------------------------------------------------------
+                                function hmsToSeconds(s) {
+                                  var b = s.split(':');
+                                  return b[0]*3600 + b[1]*60 + (+b[2] || 0);
+                                }     
+                                function secondsToHMS(secs) {
+                                function z(n){return (n&lt;10?'0':'') + n;}
+                                var sign = secs &lt; 0? '-':'';
+                                secs = Math.abs(secs);
+                                return sign + z(secs/3600 |0) + ':' + z((secs%3600) / 60 |0) + ':' + z(secs%60);
+                                }
+                                function sum(c,append) {
+                                     var temp1 = c.split(':');
+                                     var temp2 = append.split(':');
+                                     var temp;
+                                     console.log(temp1);
+                                     console.log(temp2);
+                                     temp = (Number(temp1[0]) + Number(temp2[0])) + ':' + (Number(temp1[1]) + Number(temp2[1])) + ':' + (Number(temp1[2]) + Number(temp2[2]));
+                                     return temp;
+                                } 
+                                function calc(arr2,arr1) {
+                                     return (Number(arr2[0]) - Number(arr1[0])) + ':' + (Number(arr2[1]) - Number(arr1[1])) + ':' + (Number(arr2[2]) - Number(arr1[2]));
+                                }                               
+       //----------------------------------------------------------------------------------
+       console.log("------STARTING POINT-----");
+       Beacon_student.find({major : value_major}, {select : ['gr_no_bs','minor']})
+           .exec(function(err, user) {            
+               if(err)
+                  res.badRequest('reason');           
            
-       
-     //    var i =0;
-     //    async.eachSeries(user, function (l, callback) {  
-     //        console.log(user); 
-     //          console.log(i);
-     //        console.log(user[i].gr_no_bs);
-     //        var gr_no_bs = user[i].gr_no_bs;
-     //      Transaction_student.query('select gr_no_ts,is_in_is_out,time_stamp from transaction_students where TIME(time_stamp) BETWEEN '+ time1 +' AND '+ time2 +' AND location = '+ loc +' AND gr_no_ts = '+ gr_no_bs +';',function(err2,user1) {
-     //      if (err2) {
-     //          console.log("-------------");
-     //          return res.send(err2);
-     //      }
-     //       console.log("+++++++");
-     //       console.log(user1);
-     //    //   Transaction_student.find({
-     //          //   gr_no_ts: user[i].gr_no_bs
-     //          // }, {
-     //          //   select: ['gr_no_ts', 'is_in_is_out', 'time_stamp', 'location']
-     //          // })
-     //          // .exec(function(err, user1) {
-     //          //   if (err) {
-     //          //     callback(err);
-     //          //   }
-     //       // console.log(user1);
-     //        console.log(i);
+                 console.log(user);
             
-     //        console.log("-------LENGTH----------");
-     //        console.log(user1.length);
-     //        if(user1.length == 0)
-     //        {
-     //              Attendance_student.create({ 
-     //              gr_no_as: user[i].gr_no_bs,
-     //              minor_as: user[i].minor,
-     //              major_as: value_major,
-     //              presence: 0
-     //              }).exec(function(err1, usercreate) {
-     //              if (err1) {
-     //                   callback(err1);
-     //             }
-     //            });
-     //        }
-     //        else if(user1.length == 1)
-     //        {
-     //              Attendance_student.create({ 
-     //              gr_no_as: user[i].gr_no_bs,
-     //              minor_as: user[i].minor,
-     //              major_as: value_major,
-     //              presence: 1
-     //              }).exec(function(err1, usercreate) {
-     //              if (err1) {
-     //                   callback(err1);
-     //             }
-     //            });
-     //        }
-     //        else if(user1.length > 1)
-     //        {
-     //            if(user1.length % 2 == 0)
-     //            {
-     //                console.log("EVEN");
-     //                var len = user1.length;
-     //                console.log(user1.length);
-     //                var c = 0;
-     //                var finalresult;
-     //                for(var k = 0,j = 1 ; k &lt; len, j &lt; len ; k = k + 2, j = j + 2)
-     //                {
-     //                           console.log("--------------VALUE OF k-----------");
-     //                           console.log(k);
-     //                           console.log("--------------VALUE OF j-----------");
-     //                           console.log(j);
-     //                           var a = user1[k].time_stamp.toLocaleTimeString();
-     //                           var b = user1[j].time_stamp.toLocaleTimeString(); 
-     //                           console.log(a);
-     //                           console.log(b);
+        var i =0;
+        async.eachSeries(user, function (l, callback) {   
+            console.log(i);
+            console.log(user[i].gr_no_bs);
+            var gr_no_bs = user[i].gr_no_bs;
+            Transaction_student.query("select gr_no_ts,is_in_is_out,time_stamp from transaction_students where TIME(time_stamp) BETWEEN '"+ time1 +"' AND '"+ time2  +"' AND gr_no_ts = " + gr_no_bs + " AND location = '"+ loc  +"';",function(err2,user1) {
+             if (err2) {
+                 console.log(err2);
+                 return res.send(err2);
+             }
+              console.log("+++++++");
+              console.log(user1);
+              console.log(i);
+              console.log("-------LENGTH----------");
+              console.log(user1.length);
+
+            if(user1.length == 0)
+            {
+                  Attendance_student.create({ 
+                  gr_no_as: user[i].gr_no_bs,
+                  minor_as: user[i].minor,
+                  major_as: value_major,
+                  presence: 'A'
+                  }).exec(function(err1, usercreate) {
+                  if (err1) {
+                       callback(err1);
+                 }
+                });
+            }
+            else if(user1.length == 1)
+            {
+                  Attendance_student.create({ 
+                  gr_no_as: user[i].gr_no_bs,
+                  minor_as: user[i].minor,
+                  major_as: value_major,
+                  presence: 'P'
+                  }).exec(function(err1, usercreate) {
+                  if (err1) {
+                       callback(err1);
+                 }
+                });
+            }
+            else if(user1.length > 1)
+            {
+                if(user1.length % 2 == 0)
+                {
+                    console.log("EVEN");
+                    var len = user1.length;
+                    console.log(user1.length);
+                    var c = 0;
+                    var finalresult;
+                    for(var k = 0,j = 1 ; k &lt; len, j &lt; len ; k = k + 2, j = j + 2)
+                    {
+                               console.log("--------------VALUE OF k-----------");
+                               console.log(k);
+                               console.log("--------------VALUE OF j-----------");
+                               console.log(j);
+                               var a = user1[k].time_stamp.toLocaleTimeString('en-US', { hour12: false });
+                               var b = user1[j].time_stamp.toLocaleTimeString('en-US', { hour12: false }); 
+                               console.log(a);
+                               console.log(b);
                              
-     //                            var append = secondsToHMS(hmsToSeconds(b) - hmsToSeconds(a));
-     //                            console.log(append);
-     //                             if(c == 0)
-     //                             {
-     //                               c = append;
-     //                             }
-     //                             else
-     //                             {
-     //                                c = sum(c,append); 
-     //                             } 
-     //                             console.log(c);    
-     //                }
-     //                console.log("--------FINAL--------------");
-     //                console.log(c);
-     //                var c_split = c.split(':');
-     //                console.log("--------AFTER SPLIT--------------");
-     //                console.log(c_split[0]);
-     //                console.log(c_split[1]);
-     //                console.log(c_split[2]);
-     //                if(c_split[0] &lt; minimum_hrs &amp;&amp; c_split[1] &lt; minimum_min &amp;&amp; c_split[2] &lt; minimum_sec)
-     //                 {
-     //                  Attendance_student.create({ 
-     //                  gr_no_as: user[i].gr_no_bs,
-     //                  minor_as: user[i].minor,
-     //                  major_as: value_major,
-     //                  presence: 1
-     //                  }).exec(function(err1, usercreate) {
-     //                  if (err1) {
-     //                   callback(err1);
-     //                  }
-     //                  });
-     //                }
-     //                else
-     //                {
-     //                  Attendance_student.create({ 
-     //                  gr_no_as: user[i].gr_no_bs,
-     //                  minor_as: user[i].minor,
-     //                  major_as: value_major,
-     //                  presence: 0
-     //                  }).exec(function(err1, usercreate) {
-     //                  if (err1) {
-     //                       callback(err1);
-     //                  }
-     //                 });
-     //                }
-     //            }
-     //            else
-     //            {
-     //                Attendance_student.create({ 
-     //                gr_no_as: user[i].gr_no_bs,
-     //                minor_as: user[i].minor,
-     //                major_as: value_major,
-     //                presence: 1
-     //                }).exec(function(err1, usercreate) {
-     //                if (err1) {
-     //                     callback(err1);
-     //               }
-     //            });
-     //            }
-     //        }
-     //        console.log("---AFTER INCREMENT-----");
-     //        i= i+1;
-     //        console.log(i);
-     //        console.log("-----------------------------------"); 
-     //        callback();
-     //          }); 
-     //    });
-     // });  
+                                var append = secondsToHMS(hmsToSeconds(b) - hmsToSeconds(a));
+                                console.log(append);
+                                 if(c == 0)
+                                 {
+                                   c = append;
+                                 }
+                                 else
+                                 {
+                                    c = sum(c,append); 
+                                 } 
+                                 console.log(c);    
+                    }
+                    console.log("--------FINAL--------------");
+                    console.log(c);
+                    var c_split = c.split(':');
+                    console.log("--------AFTER SPLIT--------------");
+                    console.log(c_split[0]);
+                    console.log(c_split[1]);
+                    console.log(c_split[2]);
+                    
+                    if(c_split[0] &lt; minimum_hrs) 
+                     {
+                      Attendance_student.create({ 
+                      gr_no_as: user[i].gr_no_bs,
+                      minor_as: user[i].minor,
+                      major_as: value_major,
+                      presence: 'A'
+                      }).exec(function(err1, usercreate) {
+                      if (err1) {
+                       callback(err1);
+                      }
+                      });
+                    }
+                    else
+                    { 
+                      if(c_split[1] &lt; minimum_min)
+                      {
+                        Attendance_student.create({ 
+                        gr_no_as: user[i].gr_no_bs,
+                        minor_as: user[i].minor,
+                        major_as: value_major,
+                        presence: 'A'
+                        }).exec(function(err1, usercreate) {
+                        if (err1) {
+                         callback(err1);
+                        }
+                        });
+                      }
+                      else
+                      {
+                        if(c_split[2] &lt; minimum_sec)
+                        {
+                          Attendance_student.create({ 
+                          gr_no_as: user[i].gr_no_bs,
+                          minor_as: user[i].minor,
+                          major_as: value_major,
+                          presence: 'A'
+                          }).exec(function(err1, usercreate) {
+                          if (err1) {
+                           callback(err1);
+                          }
+                          });
+                        }
+                        else
+                        {
+                          Attendance_student.create({ 
+                          gr_no_as: user[i].gr_no_bs,
+                          minor_as: user[i].minor,
+                          major_as: value_major,
+                          presence: 'P'
+                          }).exec(function(err1, usercreate) {
+                          if (err1) {
+                           callback(err1);
+                           }
+                          });
+                        }
+                      }
+                    }
+                }
+                else
+                {
+                    Attendance_student.create({ 
+                    gr_no_as: user[i].gr_no_bs,
+                    minor_as: user[i].minor,
+                    major_as: value_major,
+                    presence: 'A'
+                    }).exec(function(err1, usercreate) {
+                    if (err1) {
+                         callback(err1);
+                   }
+                });
+                }
+            }
+            console.log("---AFTER INCREMENT-----");
+            i= i+1;
+            console.log(i);
+            console.log("-----------------------------------"); 
+            callback();
+          }); 
+        });
+        return res.json("Attendance Successfully Marked");
+     });  
 },
 /**
    *Displays the presence history to the month and year passed of a specific student
@@ -448,6 +484,34 @@ insert_per_transaction_student_faculty : function (req, res) {
          return res.json(user);
    });
   },
+/**
+   *Displays the name and id of all the faculties
+   *@param {Object} req
+   *@param {object} res 
+   *@return {Object} json Object
+*/
+  list_facultyForLocationHistory : function(req,res) {
+
+     Faculty.find({
+            select: ['gr_no_f', 'name', 'surname']
+          })
+          .exec(function(err, user) {
+          if (err) {
+              return res.json(err);
+          }
+          else
+          {
+            async.forEachOfSeries(user, function(value,key,callback) {
+
+              var name = user[key].name;
+              var surname = user[key].surname;
+              user[key].name  = name + " " + surname;
+            }); 
+            console.log(user);
+            return res.json(user);
+          }   
+      }); 
+  },
 
 /**
    *Displays the location history of a particular faculty of a specific date passed
@@ -459,13 +523,13 @@ insert_per_transaction_student_faculty : function (req, res) {
 
     var param = req.allParams();
       console.log("----");
-      var gr_no =  1;//param.gr_no_s;
+      var gr_no = param.gr_no_f;
       var date = param.date;
       var data = [];
       console.log(date);
       console.log(gr_no);
 
-            Transaction_faculty.query('SELECT * FROM transaction_faculties WHERE gr_no_ts = ' + gr_no + ' AND DATE(time_stamp) = "'+date+'" ORDER BY time_stamp ASC;', function(err, user) {
+            Transaction_faculty.query('SELECT * FROM transaction_faculties WHERE gr_no_tf = ' + gr_no + ' AND DATE(time_stamp) = "'+date+'" ORDER BY time_stamp ASC;', function(err, user) {
               if (err) return res.serverError(err);
 
               for(var i = 0; ; i = i+2) {
@@ -587,13 +651,13 @@ insert_per_transaction_student_faculty : function (req, res) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#async">async</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Transaction%2520Attendance%2520StudentDetails.html">Transaction Attendance StudentDetails</a></li></ul><h3>Global</h3><ul><li><a href="global.html#async">async</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Mar 30 2016 13:03:10 GMT+0530 (IST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Mar 30 2016 19:30:39 GMT+0530 (IST)
 </footer>
 
 <script> prettyPrint(); </script>

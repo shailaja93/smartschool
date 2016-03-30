@@ -166,7 +166,7 @@ insert_per_transaction_student_faculty : function (req, res) {
 }, 
 /**
   *At the end of the day(On click of logout) this function will be called.Inserts the attendance(present or absent) of the Student based on timestamps of their entry and exit in class.The student must be present in class for atleast 30 mins to mark his presence as Present 
-  *@param {Object} req Parameters(StartTime,EndTime,stud_major,MiniTime)
+  *@param {Object} req Parameters(StartTime,EndTime,MiniTime)
   *@param {object} res 
 */
 	attendance_student: function(req,res) {
