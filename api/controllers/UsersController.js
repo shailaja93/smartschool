@@ -68,11 +68,10 @@ module.exports = {
         }
       
 		  console.log(user);
-    	   
-		  req.session.username = user[0].username;
 
     	if(user.length == 1)
     	{
+          req.session.username = user[0].username;
           console.log(req.session.username = user[0].username);
           res.status(200);
           console.log(user);

@@ -134,19 +134,61 @@ update_faculty: function(req, res) {
 list_faculty: function(req, res) {
 
          Faculty.find({
-           is_delete : 0
-          },{
-            select: ['gr_no_f', 'name', 'surname', 'address', 'blood_group','primary_contact_no','secondary_contact_no','dob','is_delete']
-          })
-          .exec(function(err, user) {
-          if (err) {
-              return res.json(err);
-          }
-          else
-          {
-              return res.json(user);
-          }   
-      });  
+          is_delete : 0
+         },{
+           select: ['gr_no_f', 'name', 'surname', 'address', 'blood_group','primary_contact_no','secondary_contact_no','dob','is_delete']
+         })
+         .exec(function(err, user) {
+         if (err) {
+             return res.json(err);
+         }
+         else
+         {
+              if(user.length == 0)
+              {
+                 return res.json("No Faculties");
+              }
+              else
+              {
+                 var i =0;
+                 async.eachSeries(user, function (l, callback) {  
+                 console.log(user); 
+                 console.log(i);
+                 console.log(user[i].gr_no_s);
+                 var gr_no = user[i].gr_no_s;
+
+                 Beacon_faculty.find({
+                 gr_no_bs: gr_no
+                 }, {
+                 select: ['gr_no_bf', 'uuid', 'major', 'minor']
+                 })
+                 .exec(function(err, user1) {
+                   if (err) {
+                     return res.send(err);
+                   }
+                  //  console.log(i);
+                  // console.log(user1[0].major);
+                  // console.log(user1);
+
+                  user[i].uuid = user1[0].uuid;
+                  user[i].major = user1[0].major;
+                  user[i].minor = user1[0].minor;
+
+                  console.log("---AFTER INCREMENT-----");
+                  i= i+1;
+                  console.log(i);
+                  console.log("-----------------------------------"); 
+                  callback();
+
+                  if(user.length == i)
+                  {
+                    return res.json(user);
+                  }
+                 });
+                });
+              }   
+            }
+         });
   },
 
 /**
@@ -205,6 +247,10 @@ delete_faculty: function(req,res)
                 if (err) {
                    return res.send(err);
                 }
+                Beacon_faculty.update({ faculty_id : id },{is_delete: 1}).exec(function (err,user){
+                 if (err) {
+                    return res.send(err);
+                 }
                 console.log("+++++++++++++++++++++++++++");
                 console.log(user);
                 return res.json("Deleted");
