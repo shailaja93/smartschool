@@ -49,12 +49,6 @@ module.exports.routes = {
   'get /StudentsController/delete_student': 'StudentsController.delete_student',
   'post /StudentsController/uploadfile_student': 'StudentsController.uploadfile_student',
 
-  // 'post /Beacon_studentsController/insert_beaconstudent': 'Beacon_studentsController.insert_beaconstudent',
-  // 'get /Beacon_studentsController/update_beaconstudent': 'Beacon_studentsController.update_beaconstudent',
-  // 'get /Beacon_studentsController/list_beaconstudent/:id': 'Beacon_studentsController.list_beaconstudent',
-  // 'get /Beacon_studentsController/view_info_beaconstudent/:id': 'Beacon_studentsController.view_info_beaconstudent',
-  // 'get /Beacon_studentsController/delete_beaconstudent/:id': 'Beacon_studentsController.delete_beaconstudent',
-
   'post /FacultiesController/insert_faculty': 'FacultiesController.insert_faculty',
   'post /FacultiesController/update_faculty': 'FacultiesController.update_faculty',
   'get /FacultiesController/list_faculty': 'FacultiesController.list_faculty',
