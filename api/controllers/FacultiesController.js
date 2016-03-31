@@ -255,6 +255,7 @@ delete_faculty: function(req,res)
                 console.log(user);
                 return res.json("Deleted");
                 });
+              });
             }
           }
   });     
