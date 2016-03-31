@@ -122,44 +122,57 @@ insert_per_transaction_student_faculty : function (req, res) {
                 };
 
                 var len = data.user_data.length;
-
+                console.log(data);
                 if(len == 1) {
 
                 var grno = user[0].gr_no_bf;
                 console.log(grno);
 
-                Transaction_faculty.create({
-                                        gr_no_tf: grno,
-                                        is_in_is_out : flag,
-                                        location : req.session.username
-                                    }).exec(function(err, user)  {
+                  Transaction_faculty.query("SELECT is_in_is_out from transaction_faculties WHERE gr_no_tf='"+ grno + "'AND location='" + req.session.username + "' ORDER BY id DESC" + ";", function(err, user) {
 
-                                        if(err) {
-                                          console.log(err);
-                                          return err;    
-                                        }
+                    console.log("====");
+                    console.log(user);
+                    if(user[0].is_in_is_out != flag) {
 
-                                        else {
-                                          console.log("++++");
-                                          console.log(user);
-                                          callback();
-                                          return res.status(200);
-                                        }
-                                    }); 
-                }
+                      Transaction_faculty.create({
+                                              gr_no_tf: grno,
+                                              is_in_is_out : flag,
+                                              location : req.session.username
+                                          }).exec(function(err, user)  {
+
+                                              if(err) {
+                                                console.log(err);
+                                                return err;    
+                                              }
+
+                                              else {
+                                                console.log("++++");
+                                                console.log(user);
+                                                callback();
+                                                return res.status(200);
+                                              }
+                                          }); 
+                    } else {
+
+                      console.log("======");
+                      callback();
+                    }
+                  });
+                  }
               });
           } else {
-
+           
             Beacon_student.find({major : value_major,minor : value_minor}, {select : ['gr_no_bs']})
             .exec(function(err, user) {
 
-                if(err) 
+                if(err) {
                     res.badRequest('reason');
-
+                }
                 var data = {
                     user_data : user,
                 };
 
+                console.log(data);
                 var len = data.user_data.length;
 
                 if(len == 1) {
@@ -167,27 +180,37 @@ insert_per_transaction_student_faculty : function (req, res) {
                 var grno = user[0].gr_no_bs;
                 console.log(grno);
 
-                Transaction_student.create({
-                                        gr_no_ts : grno,
-                                        is_in_is_out : flag,
-                                        location : req.session.username
-                                    }).exec(function(err, user)  {
+                  Transaction_student.query("SELECT is_in_is_out from transaction_students WHERE gr_no_ts='"+ grno + "'AND location='" + req.session.username + "'ORDER BY id DESC" + ";", function(err, user) {
 
-                                        if(err) {
-                                         
-                                         console.log("asasas");
-                                         return err;    
-                                        }
+                    // console.log(user);
+                    if(user[0].is_in_is_out != flag) {     
 
-                                        else {
-                                    
-                                        console.log("++++");
-                                        callback();
-                                        return res.status(200);
-                                        }
-                                    }); 
-                 }
-                });
+                      Transaction_student.create({
+                                              gr_no_ts : grno,
+                                              is_in_is_out : flag,
+                                              location : req.session.username
+                                          }).exec(function(err, user)  {
+
+                                              if(err) {
+                                              
+                                               return err;    
+                                              }
+
+                                              else {
+                                          
+                                              console.log("++++");
+                                              callback();
+                                              return res.status(200);
+                                              }
+                                          });
+                    } else {
+
+                      console.log("======");
+                      callback();
+                    }
+                  }); 
+                }
+            });
           }
         });
 
@@ -422,9 +445,14 @@ insert_per_transaction_student_faculty : function (req, res) {
             console.log(i);
             console.log("-----------------------------------"); 
             callback();
+
+            if(user.length == i)
+            {
+              delete req.session.username;
+              return res.json("Attendance Successfully Marked");
+            }
           }); 
         });
-        return res.json("Attendance Successfully Marked");
      });  
 },
 /**
@@ -485,74 +513,6 @@ insert_per_transaction_student_faculty : function (req, res) {
    });
   },
 /**
-   *Displays the name and id of all the faculties
-   *@param {Object} req
-   *@param {object} res 
-   *@return {Object} json Object
-*/
-  list_facultyForLocationHistory : function(req,res) {
-
-     Faculty.find({
-            select: ['gr_no_f', 'name', 'surname']
-          })
-          .exec(function(err, user) {
-          if (err) {
-              return res.json(err);
-          }
-          else
-          {
-            async.forEachOfSeries(user, function(value,key,callback) {
-
-              var name = user[key].name;
-              var surname = user[key].surname;
-              user[key].name  = name + " " + surname;
-            }); 
-            console.log(user);
-            return res.json(user);
-          }   
-      }); 
-  },
-
-/**
-   *Displays the location history of a particular faculty of a specific date passed
-   *@param {Object} req Parameters(gr_no_f,date)
-   *@param {object} res 
-   *@return {Object} json Object
-*/
-  faculty_locationHistory : function(req, res) {
-
-    var param = req.allParams();
-      console.log("----");
-      var gr_no = param.gr_no_f;
-      var date = param.date;
-      var data = [];
-      console.log(date);
-      console.log(gr_no);
-
-            Transaction_faculty.query('SELECT * FROM transaction_faculties WHERE gr_no_tf = ' + gr_no + ' AND DATE(time_stamp) = "'+date+'" ORDER BY time_stamp ASC;', function(err, user) {
-              if (err) return res.serverError(err);
-
-              for(var i = 0; ; i = i+2) {
-              
-                if(i &lt; user.length) {
-
-                  var t1 = user[i].time_stamp.toLocaleTimeString();
-                  var t2 = user[i+1].time_stamp.toLocaleTimeString();
-                  console.log(t1 +' -- '+ t2);
-                  user[i].time_stamp = t1 + " to " + t2;
-              //  console.log(user[i]);
-                  data = data.concat(user[i]);
-                 }
-                  else {
-                  
-                    console.log(data);
-                    return res.json(data);
-                  }
-              }
-          });
-  },
-
-/**
    *Displays the location history of the particular student of a specific date passed
    *@param {Object} req Parameters(gr_no_s,date)
    *@param {object} res 
@@ -584,11 +544,16 @@ insert_per_transaction_student_faculty : function (req, res) {
               //  console.log(user[i]);
                   data = data.concat(user[i]);
                  }
-                  else {
-                  
-                    console.log(data);
-                    return res.json(data);
-                  }
+                  else {  
+                    if(user.length != 0) {
+                      
+                      console.log(data);
+                      return res.json(data);
+                    } else {
+
+                      return res.send("No entries for the specified date or gr number");
+                    }
+                  } 
               }
           });
   }
@@ -657,7 +622,7 @@ insert_per_transaction_student_faculty : function (req, res) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Mar 30 2016 19:30:39 GMT+0530 (IST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Mar 31 2016 18:55:11 GMT+0530 (IST)
 </footer>
 
 <script> prettyPrint(); </script>
