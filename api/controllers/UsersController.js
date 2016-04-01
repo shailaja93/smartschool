@@ -51,8 +51,8 @@ module.exports = {
                   res.badRequest('reason');
                 } else {
 
-                  console.log("login thai gayu ho la bapuu! :P");
-                  res.send("login successful");
+                    console.log("login thai gayu ho la bapuu! :P");
+                    res.json("login successful");
                 } 
               });  
              }
@@ -142,7 +142,7 @@ module.exports = {
     	else
     	{
         res.status(404);
-        res.send('no such record');
+        res.send('Invalid Credentials');
     	}
     	});
     }

@@ -62,7 +62,7 @@ module.exports.routes = {
   'get /Transaction_studentsController/student_locationhistory' : 'Transaction_studentsController.student_locationhistory',
   'post /Transaction_studentsController/insert_per_transaction_student_faculty' : 'Transaction_studentsController.insert_per_transaction_student_faculty',
 
-  'post /Transaction_facultiesController/faculty_locationhistory' : 'Transaction_facultiesController.faculty_locationHistory',
+  'get /Transaction_facultiesController/faculty_locationhistory' : 'Transaction_facultiesController.faculty_locationHistory',
   'get /Transaction_facultiesController/list_facultyForLocationHistory' : 'Transaction_facultiesController.list_facultyForLocationHistory'
   /***************************************************************************
   *                                                                          *

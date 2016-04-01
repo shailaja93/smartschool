@@ -154,11 +154,11 @@ list_faculty: function(req, res) {
                  async.eachSeries(user, function (l, callback) {  
                  console.log(user); 
                  console.log(i);
-                 console.log(user[i].gr_no_s);
-                 var gr_no = user[i].gr_no_s;
+                 console.log(user[i].gr_no_f);
+                 var gr_no = user[i].gr_no_f;
 
                  Beacon_faculty.find({
-                 gr_no_bs: gr_no
+                 gr_no_bf: gr_no
                  }, {
                  select: ['gr_no_bf', 'uuid', 'major', 'minor']
                  })

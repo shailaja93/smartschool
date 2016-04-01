@@ -203,7 +203,7 @@ insert_per_transaction_student_faculty : function (req, res) {
        var value_major = Number(class_no.concat(class_div));
        console.log(value_major);
        //var loc = req.session.username;
-       var loc = '1A';
+       // var loc = '1A';
        var time1 = param.StartTime;
        var time2 = param.EndTime;
        var minimum_time = param.MiniTime;
@@ -211,13 +211,14 @@ insert_per_transaction_student_faculty : function (req, res) {
        var minimum_hrs = minimum_time_split[0];
        var minimum_min = minimum_time_split[1];
        var minimum_sec = minimum_time_split[2];
-       console.log(loc);
+       //console.log(loc);
        console.log(time1);
        console.log(time2);
        console.log(minimum_time);
        console.log(minimum_hrs);
        console.log(minimum_min);
        console.log(minimum_sec);
+       //var a = "c%";
        // var value_major = 1265;
        // var loc = "'class'";
        // var time1 = "'08:00:00'";
@@ -262,7 +263,7 @@ insert_per_transaction_student_faculty : function (req, res) {
             console.log(i);
             console.log(user[i].gr_no_bs);
             var gr_no_bs = user[i].gr_no_bs;
-            Transaction_student.query("select gr_no_ts,is_in_is_out,time_stamp from transaction_students where TIME(time_stamp) BETWEEN '"+ time1 +"' AND '"+ time2  +"' AND gr_no_ts = " + gr_no_bs + " AND location = '"+ loc  +"';",function(err2,user1) {
+            Transaction_student.query("select gr_no_ts,is_in_is_out,time_stamp from transaction_students where TIME(time_stamp) BETWEEN '"+ time1 +"' AND '"+ time2  +"' AND gr_no_ts = " + gr_no_bs + " AND location LIKE '";",function(err2,user1) {
              if (err2) {
                  console.log(err2);
                  return res.send(err2);
@@ -436,8 +437,8 @@ insert_per_transaction_student_faculty : function (req, res) {
    attendance_permonth :function(req,res) {
 
        var param = req.params.all();
-       var y = param.month;
-       var m = param.year;
+       var m = param.month;
+       var y = param.year;
        var grno = param.gr_no_s;
        // var y = 2015;
        // var m = 03;
@@ -458,6 +459,7 @@ insert_per_transaction_student_faculty : function (req, res) {
             user[i].date = user[i].date.toLocaleDateString();
           }
           console.log(user);
+          return res.json(user);
          }
        });
    },
@@ -472,7 +474,7 @@ insert_per_transaction_student_faculty : function (req, res) {
          var param = req.params.all();
          var classNo = param.stud_class;
          var classDiv = param.stud_div;
-         var major = 35035;//Number(classNo.concat((classDiv.charCodeAt(0)).toString()));
+         var major = 165;//Number(classNo.concat((classDiv.charCodeAt(0)).toString()));
          console.log(major);
          
          Attendance_student.query('SELECT students.name, students.surname, attendance_students.gr_no_as, attendance_students.minor_as, attendance_students.presence FROM students INNER JOIN attendance_students ON students.gr_no_s = attendance_students.gr_no_as where major_as = '+ major +' AND DATE(date) = DATE(CURDATE());',function(err2,user) {
@@ -494,13 +496,13 @@ insert_per_transaction_student_faculty : function (req, res) {
 
       var param = req.allParams();
       console.log("----");
-      var gr_no =  11142;//param.gr_no_s;
+      var gr_no = param.gr_no_s;
       var date = param.date;
       var data = [];
       console.log(date);
       console.log(gr_no);
 
-            Transaction_student.query('SELECT * FROM transaction_students WHERE gr_no_ts = ' + gr_no + ' AND DATE(time_stamp) = "'+date+'" ORDER BY time_stamp ASC;', function(err, user) {
+            Transaction_student.query("SELECT * FROM transaction_students WHERE gr_no_ts = " + gr_no + " AND DATE(time_stamp) = '"+date+"' ORDER BY time_stamp ASC;", function(err, user) {
               if (err) return res.serverError(err);
 
               res.status(200);

@@ -7,6 +7,8 @@
 /**
  *@module Transaction Attendance FacultyDetails
  */
+var async = require('async');
+
 module.exports = {
 /**
    *Displays the name and id of all the faculties
@@ -54,7 +56,7 @@ module.exports = {
       console.log(gr_no);
 
             Transaction_faculty.query('SELECT * FROM transaction_faculties WHERE gr_no_tf = ' + gr_no + ' AND DATE(time_stamp) = "'+date+'" ORDER BY time_stamp ASC;', function(err, user) {
-              if (err) return res.serverError(err);
+              if (err) return console.log(err);
 
               for(var i = 0; ; i = i+2) {
               
