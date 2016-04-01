@@ -35,17 +35,35 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  'POST /user/beacon_info' : 'beaconInfoController.getBeaconInfo',
   
-  'GET /user/attendance_info' : 'attendanceInfoController.displayAttendance',
-  'GET /user/attendance_student' : 'attendanceInfoController.attendance_student',
+  'post /UsersController/create_user' : 'UsersController.create_user',  
+  'get /UsersController/login_user' : 'UsersController.login_user',   
+  'get /UsersController/list_user' : 'UsersController.list_user',     
+  'post /UsersController/update_user' : 'UsersController.update_user', 
+  'get /UsersController/delete_user' : 'UsersController.delete_user',
+  
+  'post /StudentsController/insert_student': 'StudentsController.insert_student',
+  'get /StudentsController/list_student': 'StudentsController.list_student',      
+  'get /StudentsController/view_info_student/:id': 'StudentsController.view_info_student',  
+  'post /StudentsController/update_student': 'StudentsController.update_student',     
+  'get /StudentsController/delete_student': 'StudentsController.delete_student',
+  'post /StudentsController/uploadfile_student': 'StudentsController.uploadfile_student',
 
-  'POST /user/create_admin' : 'class_adminController.userCreate',  
-  'GET /user/user_login' : 'class_adminController.userLogin',
-  'GET /user/list_user' : 'class_adminController.userList',
-  'POST /user/update_user' : 'class_adminController.userUpdate'
+  'post /FacultiesController/insert_faculty': 'FacultiesController.insert_faculty',
+  'post /FacultiesController/update_faculty': 'FacultiesController.update_faculty',
+  'get /FacultiesController/list_faculty': 'FacultiesController.list_faculty',
+  'get /FacultiesController/view_info_faculty/:id': 'FacultiesController.view_info_faculty',
+  'get /FacultiesController/delete_faculty': 'FacultiesController.delete_faculty',
+  'post /FacultiesController/uploadfile_faculty': 'FacultiesController.uploadfile_faculty',
 
+  'get /Transaction_studentsController/attendance_student': 'Transaction_studentsController.attendance_student',
+  'get /Transaction_studentsController/attendance_permonth': 'Transaction_studentsController.attendance_permonth',
+  'get /Transaction_studentsController/attendance_currentday': 'Transaction_studentsController.attendance_currentday',
+  'get /Transaction_studentsController/student_locationhistory' : 'Transaction_studentsController.student_locationhistory',
+  'post /Transaction_studentsController/insert_per_transaction_student_faculty' : 'Transaction_studentsController.insert_per_transaction_student_faculty',
 
+  'get /Transaction_facultiesController/faculty_locationhistory' : 'Transaction_facultiesController.faculty_locationHistory',
+  'get /Transaction_facultiesController/list_facultyForLocationHistory' : 'Transaction_facultiesController.list_facultyForLocationHistory'
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -55,5 +73,4 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-
 };

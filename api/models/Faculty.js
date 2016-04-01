@@ -1,9 +1,9 @@
 module.exports = {
 
+  tableName : "faculties",
 
-	tableName : 'students',
   attributes: {
-       gr_no_s: {
+       gr_no_f: {
            type: 'INTEGER',
            primaryKey : true,
            autoincrement : true
